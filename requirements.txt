@@ -1,0 +1,9 @@
+ollama
+llama-index
+llama-index-llms-ollama
+llama-index-embeddings-huggingface
+#streamlit
+pymupdf
+llama-index-readers-file
+
+# pip install  -r requirements.txt
