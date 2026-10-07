@@ -8,6 +8,8 @@ from llama_index.core.node_parser import SentenceSplitter
 from llama_index.readers.file import PDFReader
 import logging
 
+
+#disable distracting logs
 logging.basicConfig(level=logging.WARNING)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("httpcore").setLevel(logging.WARNING)
@@ -15,10 +17,9 @@ logging.getLogger("huggingface_hub").setLevel(logging.WARNING)
 logging.getLogger("sentence_transformers").setLevel(logging.WARNING)
 logging.getLogger("llama_index").setLevel(logging.WARNING)
 
-# dotenv laden
 dotenv.load_dotenv()
 
-# fetch hf token aus dotenv
+# fetch hf token from dotenv
 HF_TOKEN = os.getenv("HF_TOKEN")
 
 # embedding model
@@ -36,7 +37,6 @@ def init_llm():
         context_window=8000,
     )
 
-# Doekumente laden und indexieren inlusive verbessertem Chunking
 def load_documents_and_init_index():
     global query_engine
     reader = PDFReader()
@@ -54,10 +54,10 @@ def load_documents_and_init_index():
     )
     query_engine = index.as_query_engine(similarity_top_k=6)
 
-# Dokumente durchsuchen Tool
+# search documents tool
 async def search_document(query: str) -> str:
-   # if query_engine is None:
-    #    raise RuntimeError("Document index is not initialized. Call load_documents_and_init_index() first.")
+    if query_engine is None:
+        raise RuntimeError("Document index is not initialized. Call load_documents_and_init_index() first.")
 
     response = await query_engine.aquery(query)
     return str(response)

@@ -9,7 +9,7 @@ from test_ollama import (
 
 async def run_chat_loop(agent):
     while True:
-        user_prompt = input("Frag mich aus: ").strip()
+        user_prompt = input("Your prompt ").strip()
 
         if user_prompt.lower() == "exit":
             return
@@ -24,17 +24,17 @@ async def run_chat_loop(agent):
             print(f"An error occurred while running the agent: {exc}")
 
 async def async_main():
-    print("Initialisiere LLM und Embedding Model...")
+    print("Initializing LLM and Embedding model...")
     init_llm()
     init_embedding()
 
-    print("Lade Dokumente aus dem Ordner 'data'...")
+    print("loading docs from dir 'data'...")
     load_documents_and_init_index()
 
-    print("Starte den Agenten...")
+    print("starting agent...")
     agent = init_agent()
 
-    print("Agent soweit. Was willst du über deine PDFs wissen?")
+    print("agent ready. Type 'exit' to quit.")
 
     await run_chat_loop(agent)
 
